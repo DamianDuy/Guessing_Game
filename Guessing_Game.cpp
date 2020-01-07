@@ -24,7 +24,7 @@ class guessingGame
       symbolsFile.open("symbols.txt");
       if (!symbolsFile.good())
       {
-        std::cout << "Could not open the file. Program will be terminated. Check if the file" << std::endl << "\"symbols.txt\" is in the folder.";
+        std::cout << "Could not open the file. Program will be terminated. Check if the file" << std::endl << "\"symbols.txt\" is in the folder.\n";
         exit(EXIT_FAILURE);
       }
       while(getline(symbolsFile,line))
@@ -45,7 +45,7 @@ class guessingGame
     std::cin >> bet;
     if (std::cin.fail())
     {
-      std::cout << "Invalid input. Program will be terminated.";
+      std::cout << "Invalid input. Program will be terminated.\n";
       exit (EXIT_FAILURE);
     }
     while (bet < 0)
@@ -54,7 +54,7 @@ class guessingGame
       std::cin >> bet;
       if (std::cin.fail())
        {
-        std::cout << "Invalid input. Program will be terminated.";
+        std::cout << "Invalid input. Program will be terminated.\n";
         exit (EXIT_FAILURE);
        }
     }
@@ -64,7 +64,7 @@ class guessingGame
        std::cin >> bet;
        if (std::cin.fail())
        {
-        std::cout << "Invalid input. Program will be terminated.";
+        std::cout << "Invalid input. Program will be terminated.\n";
         exit (EXIT_FAILURE);
        }
     }
@@ -131,7 +131,7 @@ int main()
  std::cin >> game.money;
  if (std::cin.fail())
  {
-  std::cout << "Invalid input. Program will be terminated.";
+  std::cout << "Invalid input. Program will be terminated.\n";
   exit (EXIT_FAILURE);
  }
 while (game.money <= 0)
@@ -140,7 +140,7 @@ while (game.money <= 0)
   std::cin >> game.money;
   if (std::cin.fail())
     {
-      std::cout << "Invalid input. Program will be terminated.";
+      std::cout << "Invalid input. Program will be terminated.\n";
       exit (EXIT_FAILURE);
     }
 }
@@ -148,7 +148,7 @@ while (game.money <= 0)
     std::cin >> choice;
  if (std::cin.fail())
     {
-       std::cout << "Invalid input. Program will be terminated.";
+       std::cout << "Invalid input. Program will be terminated.\n";
        exit (EXIT_FAILURE);
     }
  while (choice != 0 && choice != 1)
@@ -171,7 +171,7 @@ while (game.money <= 0)
     std::cin >> choice;
     if (std::cin.fail())
     {
-       std::cout << "Invalid input. Program will be terminated.";
+       std::cout << "Invalid input. Program will be terminated.\n";
        exit (EXIT_FAILURE);
     }
     while (choice != 0 && choice != 1)
@@ -180,7 +180,7 @@ while (game.money <= 0)
       std::cin >> choice;
       if (std::cin.fail())
       {
-         std::cout << "Invalid input. Program will be terminated.";
+         std::cout << "Invalid input. Program will be terminated.\n";
          exit (EXIT_FAILURE);
       }
     }
@@ -188,8 +188,8 @@ while (game.money <= 0)
  sleep (2);
  std::cout << std::endl;
  std::cout << "Thank you for playing!";
- if (game.money >= 0) std::cout << " You ended up with " << game.money << " money.";
- else std::cout << "You ended up with " << abs(game.money) << " debt."; //A feature can be started by making it possible for user to bet more money then they have
+ if (game.money >= 0) std::cout << " You ended up with " << game.money << " money.\n";
+ else std::cout << "You ended up with " << abs(game.money) << " debt.\n"; //A feature can be started by making it possible for user to bet more money then they have
  return 0;
 }
 
