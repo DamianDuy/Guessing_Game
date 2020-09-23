@@ -44,6 +44,34 @@ class Messages {
     std::cout << "Invalid input. Program will be terminated.\n";
     exit(EXIT_FAILURE);
   }
+  int menuChoice() {
+    int choice = 0;
+    do {
+      std::cin >> choice;
+      if (std::cin.fail()) {
+        errorMessage();
+      }
+      if (choice != 0 && choice != 1) {
+        std::cout << "No such choice in the menu. Try again." << std::endl;
+      }
+    } while (choice != 0 && choice != 1);
+    return choice;
+  }
+  double moneyChoice() {
+    double money = 0;
+    do {
+      std::cout << "How much money do you have?" << std::endl;
+      std::cin >> money;
+      if (std::cin.fail()) {
+        errorMessage();
+      }
+      if (money <= 0) {
+        std::cout << "You must have more money than 0 to play. Try again: "
+                  << std::endl;
+      }
+    } while (money <= 0);
+    return money;
+  }
 };
 
 class guessingGame {
@@ -139,52 +167,22 @@ class guessingGame {
 };
 
 int main() {
+  int choice = 0;
+  double money = 0;
   Messages message;
   guessingGame game;
   message.beginMessage();
-  int choice = 0;
-  double _money = 0;
-  do {
-    std::cout << "How much money do you have?" << std::endl;
-    std::cin >> _money;
-    if (std::cin.fail()) {
-      message.errorMessage();
-    }
-    if (_money <= 0) {
-      std::cout << "You must have more money than 0 to play. Try again: "
-                << std::endl;
-    }
-  } while (_money <= 0);
-  game.setMoney(_money);
+  money = message.moneyChoice();
+  game.setMoney(money);
   message.menu();
-  std::cin >> choice;
-  if (std::cin.fail()) {
-    message.errorMessage();
-  }
-  while (choice != 0 && choice != 1) {
-    std::cout << "No such choice in the menu. Try again." << std::endl;
-    std::cin >> choice;
-    if (std::cin.fail()) {
-      message.errorMessage();
-    }
-  }
+  choice = message.menuChoice();
   while (choice == 1) {
     game.loadSymbol();
     game.receiveInput();
     game.setResult();
     if (game.getMoney() <= 0) break;
     message.menu();
-    std::cin >> choice;
-    if (std::cin.fail()) {
-      message.errorMessage();
-    }
-    while (choice != 0 && choice != 1) {
-      std::cout << "No such choice in the menu. Try again." << std::endl;
-      std::cin >> choice;
-      if (std::cin.fail()) {
-        message.errorMessage();
-      }
-    }
+    choice = message.menuChoice();
   }
   game.showResult();
   return 0;
