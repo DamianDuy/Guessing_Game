@@ -11,9 +11,7 @@ class Messages {
  public:
   void menu()  // Shows the menu
   {
-    std::cout << std::endl;
     std::cout << "0) Exit" << std::endl << "1) Play" << std::endl;
-    std::cout << std::endl;
   }
   void beginMessage() {
     std::cout << "Welcome to the Guessing Game!" << std::endl;
@@ -49,22 +47,8 @@ class Messages {
 };
 
 class guessingGame {
- private:
-  std::string chosenSymbol;
-  std::string userInput;
-  double money;
-  double bet;
-
  public:
-  double getMoney() { return money; }
-  void setMoney(double _money) { money = _money; }
-  void loadSymbol()  // Loads the random symbol from the file
-  {
-    srand(time(NULL));
-    std::string line;
-    int lineNumber = 1;
-    int randomNumber = (std::rand() % 5) + 1;
-    std::fstream symbolsFile;
+  guessingGame() {
     symbolsFile.open("symbols.txt");
     if (!symbolsFile.good()) {
       std::cout << "Could not open the file. Program will be terminated. Check "
@@ -73,6 +57,16 @@ class guessingGame {
                 << "\"symbols.txt\" is in the folder.\n";
       exit(EXIT_FAILURE);
     }
+    srand(time(NULL));
+  }
+  ~guessingGame() { symbolsFile.close(); }
+  double getMoney() { return money; }
+  void setMoney(double _money) { money = _money; }
+  void loadSymbol()  // Loads the random symbol from the file
+  {
+    std::string line;
+    int lineNumber = 1;
+    int randomNumber = (std::rand() % 5) + 1;
     while (getline(symbolsFile, line)) {
       if (lineNumber == randomNumber) {
         chosenSymbol = line;
@@ -80,34 +74,26 @@ class guessingGame {
       }
       lineNumber++;
     }
-    symbolsFile.close();
+    symbolsFile.clear();
+    symbolsFile.seekg(0);
   }
   void receiveInput()  // Prompts user to enter his guess and the amount of many
-                       // he has/wants to bet
+                       // // he has/wants to bet
   {
     Messages message;
-    std::cout << std::endl;
     std::cout << "How much money do you want to bet?" << std::endl;
-    std::cin >> bet;
-    if (std::cin.fail()) {
-      message.errorMessage();
-    }
-    while (bet < 0) {
-      std::cout << "You can't bet less money than zero! Try again: "
-                << std::endl;
+    do {
       std::cin >> bet;
       if (std::cin.fail()) {
         message.errorMessage();
       }
-    }
-    while (bet > money) {
-      std::cout << "You can't bet more money than you have! Try again: "
-                << std::endl;
-      std::cin >> bet;
-      if (std::cin.fail()) {
-        message.errorMessage();
+      if (bet <= 0 || bet > money) {
+        std::cout << "Inappropriate amount (has to be > 0 and <= the money you "
+                     "own). Try again: "
+                  << std::endl;
       }
-    }
+
+    } while (bet <= 0 || bet > money);
     std::cout << "Choose the symbol: ";
     std::cin.clear();
     std::cin.ignore(1000, '\n');
@@ -143,6 +129,13 @@ class guessingGame {
           << " debt.\n";  // A feature can be started by making it possible
                           // for user to bet more money then they have
   }
+
+ private:
+  std::string chosenSymbol;
+  std::string userInput;
+  double money;
+  double bet;
+  std::fstream symbolsFile;
 };
 
 int main() {
